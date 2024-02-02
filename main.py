@@ -5,6 +5,7 @@ from src.schemas import UserBase, Token
 from fastapi.security import OAuth2PasswordRequestForm
 from src.jwt import create_access_token
 from src.decorators import AccessDecorator
+from src.middlewares import AuthenticationMiddleware
 app = FastAPI(
     docs_url="/doc",
     title="FastAPI Demo",
@@ -12,9 +13,9 @@ app = FastAPI(
     version="0.0.1",
     redoc_url="/redoc"
 )
-
-
 user_dependency = UserDependency()
+app.add_middleware(AuthenticationMiddleware, user_dependency=user_dependency)
+
 access = AccessDecorator(user_dependency)
 auth_router = APIRouter(
     prefix="/auth",
@@ -44,6 +45,6 @@ async def root(request: Request, user: UserBase = Depends(user_dependency.get_us
     return user.__dict__
 
 @app.get("/is_authenticated", dependencies=[Depends(user_dependency.get_user_from_token)])
-@access.is_authenticated
+# @access.is_authenticated
 async def isAuthenticated(request: Request):
     return {"message": "User is authenticated"}

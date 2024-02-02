@@ -31,6 +31,7 @@ class User(Base):
     last_login = Column(DateTime, nullable=True)
     birthdate = Column(DateTime, nullable=True)
 
+
     # Relations
     roles = relationship("M2MUserRole", back_populates="user")
     groups = relationship("M2MUserGroup", back_populates="user")

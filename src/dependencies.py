@@ -15,6 +15,7 @@ from .crpto import create_password_hash
 from .models import User, M2MUserRole, M2MUserGroup, Role, Group, Permission, Policy, Sessions
 import yaml
 from fastapi.security import OAuth2PasswordBearer
+from starlette.middleware.base import BaseHTTPMiddleware
 
 from .schemas import UserBase, RoleBase, GroupBase, PermissionBase, PolicyBase
 
@@ -58,4 +59,38 @@ class UserDependency:
             data={"sub": user.username})  # type: ignore
         return {"access_token": access_token, "token_type": "bearer"}
 
+
+    # def get_auth_middleware(self):
+        # class AuthenticationMiddleware(BaseHTTPMiddleware):
+
+        #     def __init__(self, app):
+        #         super().__init__(app)
+        #         # self.user_dependency = user_dependency
+        #         # Dictionary to store request counts for each IP
+        #         # self.request_counts = {}
+
+        #     async def dispatch(self, request, call_next):
+        #         # Get the client's IP address
+        #         print('Middleware')
+        #         #print request body
+        #         print(request.__dict__['scope'].keys())
+
+        #         # get request headers
+        #         token = request.headers.get('authorization', str()).split(' ')[1]
+        #         print(f"token {token}")
+
+        #         user = self.user_dependency.get_user_from_token(token)
+
+        #         # decode token
+        #         # if token is invalid, return 401
+
+
+
+
+
+        
+                # Proceed with the request
+        #         response = await call_next(request)
+        #         return response
+        # return AuthenticationMiddleware
 
