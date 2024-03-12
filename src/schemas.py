@@ -1,5 +1,5 @@
 from pydantic import BaseModel, EmailStr
-from typing import Optional
+from typing import Optional, Union
 import datetime
 
 """ Base pydantic models """
@@ -11,10 +11,10 @@ class UserBase(BaseModel):
     username: Optional[str]
     email: Optional[EmailStr]
     active: Optional[bool] = True
-    birthdate: Optional[datetime.datetime | None]
+    birthdate: Optional[Union[datetime.datetime, None]]
     created_at: Optional[datetime.datetime]
     updated_at: Optional[datetime.datetime]
-    last_login: Optional[datetime.datetime | None]
+    last_login: Optional[Union[datetime.datetime, None]]
 
     class Config:
         orm_mode = True
